@@ -4,11 +4,11 @@
         <!-- BEGIN MAIN NAV -->
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="#">
+                <a class="navbar-item" href="index.php">
                     <span class="icon-text">
                         <span class="icon"></span>
                         <i class="fas fa-yin-yang fa-lg"></i>
-                        <span>&nbsp;Balance</span>
+                        <span>&nbsp;<?= $siteName ?></span>
                     </span>
                 </a>
                 <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
@@ -25,7 +25,7 @@
                 <div>
                     <div class="navbar-end">
                         <div class="navbar-item">
-                            <a class="button is-light">Contact us</a>
+                            <a class="button is-light" href="contact.php">Contact us</a>
                             <a class="button is-primary">Log in</a>
                         </div>
                     </div>
@@ -45,6 +45,16 @@
 
     </header>
     <!-- END PAGE HEADER -->
+    
+    <!-- START USER MESSAGE -->
+    <?php if (!empty($_SESSION['messages'])) : ?>
+        <section class="notification is-warning">
+            <button class="delete"></button>
+            <?php echo implode('<br>', $_SESSION['messages']);
+                    $_SESSION['messages'] = []; // Clear the user responses?>
+        </section>
+    <?php endif; ?>
+    <!-- END USER MESSAGE -->
 
     <!-- BEGIN MAIN PAGE CONTENT -->
     <main class="container">
