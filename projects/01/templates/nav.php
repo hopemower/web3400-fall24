@@ -26,7 +26,24 @@
                     <div class="navbar-end">
                         <div class="navbar-item">
                             <a class="button is-light" href="contact.php">Contact us</a>
-                            <a class="button is-primary" href="login.php">Log in</a>
+                            <!-- BEGIN USER MENU -->
+                            <?php if (isset($_SESSION['loggedin'])) : ?>
+                                <div class="navbar-item has-dropdown is-hoverable">
+                                    <a class="button navbar-link">
+                                        <span class="icon">
+                                        <i class="fas fa-user"></i>
+                                        </span>
+                                    </a>
+                                    <div class="navbar-dropdown">
+                                        <a href="profile.php" class="navbar-item">Profile</a>
+                                        <hr class="navbar-divider">
+                                        <a href="logout.php" class="navbar-item">Logout</a>
+                                    </div>
+                                </div>
+                            <?php else : ?>
+                                <a href="login.php" class="button is-link">Login</a>
+                            <?php endif; ?>
+                            <!-- END USER MENU -->
                             
                         </div>
                     </div>
@@ -35,14 +52,20 @@
         </nav>
         <!-- END MAIN NAV -->
         <section class="block">&nbsp;<!--only for spacing purposes--></section>
-        <!-- BEGIN HERO -->
-        <section class="hero is-info">
-            <div class="hero-body">
-                <p class="title">Hero title</p>
-                <p class="subtitle">Hero subtitle</p>
-            </div>
-        </section>
-        <!-- END HERO -->
+        <?php if ($_SERVER['PHP_SELF'] == '/index.php') : ?>
+            <!-- BEGIN HERO -->
+            <section class="hero is-link">
+                <div class="hero-body">
+                    <p class="title">
+                        Hero title
+                    </p>
+                    <p class="subtitle">
+                        Hero subtitle
+                    </p>
+                </div>
+            </section>
+            <!-- END HERO -->
+        <?php endif; ?>
 
     </header>
     <!-- END PAGE HEADER -->
