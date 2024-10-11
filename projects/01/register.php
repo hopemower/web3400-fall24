@@ -70,6 +70,9 @@ if (isset($_GET['code'])) {
 }
 ?>
 
+<?php include 'templates/head.php'; ?>
+<?php include 'templates/nav.php'; ?>
+
 <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Create a user account</h1>
@@ -132,3 +135,5 @@ if (isset($_GET['code'])) {
     </form>
 </section>
 <!-- END YOUR CONTENT -->
+
+<?php include 'templates/footer.php'; ?>
