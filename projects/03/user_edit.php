@@ -13,35 +13,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 // Step 3: Check if the update form was submitted. If so, update user details. Similar steps as in user_add.php but with an UPDATE SQL query
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the user ID from hidden form input
-    $user_id = (int)$_POST['id']; // Ensure ID is an integer
+    // Retrieve form data
+    $full_name = $_POST['full_name'];
+    $phone = $_POST['phone'];
+    $role = $_POST['role'];
 
-    // Get and sanitize form inputs
-    $full_name = htmlspecialchars($_POST['full_name']);
-    $phone = htmlspecialchars($_POST['phone']);
-    $role = $_POST['role']; // No need to sanitize predefined roles as they're controlled by the form
-
-    // Update the user details in the database using an UPDATE SQL query
-    $update_stmt = $pdo->prepare("UPDATE users SET full_name = ?, phone = ?, role = ? WHERE id = ?");
-    $update_stmt->execute([$full_name, $phone, $role, $user_id]);
+    //update user record in the db
+    $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ?, `role` = ?, WHERE `id` = ? ");
+    $stmt->execute([$full_name, $phone, $role, $_POST['id']]);
 
     // Redirect to the users management page with a success message
-    $_SESSION['messages'][] = "The user account for $full_name was successfully updated.";
+    $_SESSION['messages'][] = "The user account for $full_name was updated.";
     header('Location: users_manage.php');
     exit;
-} 
-// Step 4: Else it's an initial page request, fetch the user's current data from the database by preparing and executing a SQL statement that uses the user gets the user id from the query string (ex. $_GET['id'])
-else if (isset($_GET['id'])) {
+} else {
+    // Step 4: Else it's an initial page request, fetch the user's current data from the database by preparing and executing a SQL statement that uses the user gets the user id from the query string (ex. $_GET['id'])
+    if (isset($_GET['id'])) {
     $user_id = (int)$_GET['id']; // Ensure the ID is an integer for security
 
     // Fetch the user's current data from the database
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->execute([$user_id]);
+    $stmt->execute([$_GET['id']]);
     $user = $stmt->fetch();
-
-    // If user not found, redirect back to users_manage.php
-    if (!$user) {
-        $_SESSION['messages'][] = "User not found.";
+    } else {
+        // If user not found, redirect back to users_manage.php
+        $_SESSION['messages'][] = "No user with that ID was found in the database.";
         header('Location: users_manage.php');
         exit;
     }

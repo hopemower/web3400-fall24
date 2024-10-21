@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt password
     $phone = htmlspecialchars($_POST['phone']);
     $role = $_POST['role']; // Get user role
+    $activation_code = uniqid(); // generate a unique id
 
     // Check if the email already exists
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
@@ -32,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // Email is unique, proceed with inserting the new user record
-        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `role`) VALUES (?, ?, ?, ?, ?)");
-        $insertStmt->execute([$full_name, $email, $password, $phone, $role]);
+        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `role`, `activation_code`) VALUES (?, ?, ?, ?, ?, ?)");
+        $insertStmt->execute([$full_name, $email, $password, $phone, $role, $activation_code]);
 
         // Success message and redirection
         $_SESSION['messages'][] = "The user account for $full_name was created. They will need to login to activate their account.";
