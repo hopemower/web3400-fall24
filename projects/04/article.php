@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
     
     // execute the statement with the provided article ID
     $stmt->execute([$_GET['id']]); 
-    $article = $stmt->fetch(PDO::FETCH_ASSOC);
+    $article = $stmt->fetch();
 
     // Step 3: If an article with that ID does not exist, display the message "An article with that ID did not exist."
     if (!$article) {
@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
         <article class="media">
             <figure class="media-left">
                 <p class="image is-128x128">
-                    <img src="https://picsum.photos/128">
+                    <img src="https://picsum.photos/128?random=<?= $article['id']?>">
                 </p>
             </figure>
             <div class="media-content">
