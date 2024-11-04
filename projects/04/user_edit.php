@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = $_POST['role'];
 
     //update user record in the db
-    $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ?, `role` = ?, WHERE `id` = ? ");
+    $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ?, `role` = ? WHERE `id` = ? ");
     $stmt->execute([$full_name, $phone, $role, $_POST['id']]);
 
     // Redirect to the users management page with a success message
