@@ -22,7 +22,7 @@ if (!$articles) {
 
     <!-- BEGIN YOUR CONTENT -->
     <h1 class="title"> This Journey Begins With You!</h1>
-    <h2 class="subtitle">Get ready to dsicover the true you!</h2>
+    <h2 class="subtitle">Get ready to discover the real you!</h2>
 
 
         <section class="section">
