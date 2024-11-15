@@ -23,12 +23,16 @@ if (isset($_GET['id'])) {
 if (isset($_GET['status'])) {
     $stmt = $pdo->prepare("UPDATE tickets SET status = ? WHERE id = ?");
     $stmt->execute([$_GET['status'], $_GET['id']]);
+    header("Location: ticket_detail.php?id=" . $_GET['id']);
+    exit;
 }
 
 // Check if the comment form has been submitted. If true, then INSERT the ticket comment
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("INSERT INTO ticket_comments (ticket_id, user_id, comment) VALUES (?, ?, ?)");
     $stmt->execute([$_GET['id'], $_SESSION['user_id'], $_POST['msg']]);
+    header("Location: ticket_detail.php?id=" . $_GET['id']);
+    exit;
 }
 ?>
 <?php include 'templates/head.php'; ?>
