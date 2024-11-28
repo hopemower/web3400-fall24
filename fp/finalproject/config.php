@@ -1,10 +1,8 @@
 <?php
-
 // Site Variables
 $siteName = "ZEN You";
 $contactEmail = "hopemower3@gmail.com";
 $contactPhone = "123-456-7890";
-
 // Create the connection to your web3400 database
 try {
     // Database connection variables
@@ -22,7 +20,6 @@ try {
 } catch (PDOException $e) {
     die("Could not connect to the database $dbname :" . $e->getMessage());
 }
-
 // Start a user session for the messages response system
 session_start();
 

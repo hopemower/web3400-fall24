@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt password
     $phone = htmlspecialchars($_POST['phone']);
-    $sms = $_POST['sms'] == 'on' ? 1 : 0;
-    $subscribe = $_POST['subscribe'] == 'on' ? 1 : 0;
+    $sms = isset($_POST['sms']) && $_POST['sms'] === 'on' ? 1 : 0;
+    $subscribe = isset($_POST['subscribe']) && $_POST['subscribe'] === 'on' ? 1 : 0;
     $activation_code = uniqid(); // Generate a unique id
 
     // Check if the email is unique

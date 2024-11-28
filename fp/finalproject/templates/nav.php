@@ -19,12 +19,7 @@
         </div>
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="#">Home</a>
-                <a class="navbar-item" href="#">About</a>
                 <!-- BEGIN ADMIN MENU -->
-                <a href="admin_dashboard.php" class="navbar-item">
-                    Dashboard
-                </a>
                 <?php if (isset($_SESSION['loggedin']) && $_SESSION['user_role'] == 'admin') : ?>
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link">
@@ -34,6 +29,9 @@
                             <span>Admin</span>
                         </a>
                         <div class="navbar-dropdown">
+                            <a href="admin_dashboard.php" class="navbar-item">
+                                Dashboard
+                            </a>
                             <a href="users_manage.php" class="navbar-item">
                                 Manage Users
                             </a>

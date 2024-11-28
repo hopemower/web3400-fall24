@@ -333,4 +333,3 @@ $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>
-

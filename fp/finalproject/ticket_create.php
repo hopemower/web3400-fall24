@@ -1,23 +1,35 @@
 <?php
 // Include config.php file
 include 'config.php';
-// Secure and only allow 'admin' users to access this page
-if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
-    // Redirect user to login page or display an error message
-    $_SESSION['messages'][] = "You must be an administrator to access that resource.";
-    header('Location: login.php');
+// Check if the user is logged in
+if (!$_SESSION['loggedin']) {
+    header('Location: login.php'); // Redirect to login if not logged in
     exit;
 }
-// If the form was submitted, insert a new ticket into the database and redirect back to the `tickets.php` page with the message "The ticket was successfully added."
+// If the form was submitted, insert a new ticket into the database and redirect back to the `ticket_create.php` for regular users and 'tickets.php' for admin users page with the message "The ticket was successfully added."
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("INSERT INTO tickets (user_id, title, description, priority) VALUES (?, ?, ?, ?)");
     $stmt->execute([$_SESSION['user_id'], $_POST['title'], $_POST['description'], $_POST['priority']]);
-    header('Location: tickets.php?msg=The ticket was successfully added.');
+        // Redirect based on user role
+        if ($_SESSION['user_role'] === 'admin') {
+            header('Location: tickets.php');
+            $_SESSION['messages'][] = "The ticket was successfully added.";
+        } else {
+            header('Location: ticket_create.php');
+            $_SESSION['messages'][] = "The ticket was successfully added.";
+        }
+        exit;
 }
 ?>
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 <!-- BEGIN YOUR CONTENT -->
+<?php
+// Check if a success message is present in the query parameters
+if (isset($_GET['msg'])) {
+    echo '<div class="notification is-success">' . htmlspecialchars($_GET['msg']) . '</div>';
+}
+?>
 <section class="section">
     <h1 class="title">Create Ticket</h1>
     <form action="" method="post">
